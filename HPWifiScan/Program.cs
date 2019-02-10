@@ -210,8 +210,13 @@ namespace HPWifiScan
                 var maxXScanRes = scanXResolutionslist[scanXResolutionslist.Count - 1];
                 var maxYScanRes = scanYResolutionslist[scanYResolutionslist.Count - 1];
 
-                // sending scan request       
+                var fileExt = Path.GetExtension(fileName).ToLower();
+                var documentFormatExt = fileExt == ".pdf" ? "application/pdf" : "image/jpeg";
 
+                // sending scan request    
+
+                /* working request, but this ignores resolution:
+                             
                 var scanRequest = $@"<?xml version='1.0' encoding='UTF-8'?>
                             <scan:ScanSettings xmlns:pwg=""http://www.pwg.org/schemas/2010/12/sm"" xmlns:scan=""http://schemas.hp.com/imaging/escl/2011/05/03"">
                               <pwg:Version>2.6</pwg:Version>
@@ -226,11 +231,32 @@ namespace HPWifiScan
                               </pwg:ScanRegions>
                               <scan:InputSource>Platen</scan:InputSource>
                               <scan:ColorMode>RGB24</scan:ColorMode>
+                              <scan:Format>Jpeg</scan:Format>
                               <scan:ContentType>Photo</scan:ContentType>
                               <scan:XResolution>{maxXScanRes}</scan:XResolution>
                               <scan:YResolution>{maxYScanRes}</scan:YResolution>
                             </scan:ScanSettings>
                             ";
+                */
+
+                var scanRequest = $@"<?xml version='1.0' encoding='utf-8'?>
+            			<escl:ScanSettings xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:pwg=""http://www.pwg.org/schemas/2010/12/sm"" xmlns:escl=""http://schemas.hp.com/imaging/escl/2011/05/03"">
+                            <pwg:Version>2.63</pwg:Version>
+            				<pwg:ScanRegions pwg:MustHonor=""false"">
+            					<pwg:ScanRegion>
+            						<pwg:ContentRegionUnits>escl:ThreeHundredthsOfInches</pwg:ContentRegionUnits>
+            						<pwg:XOffset>0</pwg:XOffset>
+            						<pwg:YOffset>0</pwg:YOffset>
+                                    <pwg:Width>{maxWidth}</pwg:Width>
+                                    <pwg:Height>{maxHeight}</pwg:Height>
+            					</pwg:ScanRegion>
+            				</pwg:ScanRegions>
+            				<escl:DocumentFormatExt>{documentFormatExt}</escl:DocumentFormatExt>
+            				<pwg:InputSource>Platen</pwg:InputSource>
+            				<escl:XResolution>{maxXScanRes}</escl:XResolution>
+            				<escl:YResolution>{maxYScanRes}</escl:YResolution>
+            				<escl:ColorMode>RGB24</escl:ColorMode>
+            			</escl:ScanSettings>";
 
                 var scanRequestUrl = $"http://{printerUrl}:8080/eSCL/ScanJobs";
 
