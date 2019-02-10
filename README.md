@@ -25,5 +25,6 @@ Command line scanning tool for HP network printers
 
 
 Thanks to:
-    - https://github.com/kno10/python-scan-eSCL    
-    - https://mamascode.wordpress.com/2015/04/07/scanning-from-wifi-hp-scanner/
+
+- https://github.com/kno10/python-scan-eSCL
+- https://mamascode.wordpress.com/2015/04/07/scanning-from-wifi-hp-scanner/
