@@ -23,6 +23,10 @@ Command line scanning tool for HP network printers
   `HPWifiScan.exe 192.168.1.12 document.pdf`
 
 
+- Building:
+
+  `msbuild HPWifiScan.sln`
+
 
 Thanks to:
 
