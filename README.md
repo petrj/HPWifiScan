@@ -9,9 +9,10 @@ Command line scanning tool for HP network printers
 
 - Usage:
 
-  `HPWifiScan.exe PrinterIP [filename]`
+  `HPWifiScan.exe PrinterIP [filename] [dpi]`
 
  default fileName is scan.jpg
+ default DPI is maximum supported by printer
 
 
 - Examples:
@@ -21,6 +22,8 @@ Command line scanning tool for HP network printers
   `HPWifiScan.exe 192.168.1.12 MyScannedFile.jpg`
   
   `HPWifiScan.exe 192.168.1.12 document.pdf`
+
+  `HPWifiScan.exe 192.168.1.12 document-300DPI.pdf 300`
 
 
 - Building:
