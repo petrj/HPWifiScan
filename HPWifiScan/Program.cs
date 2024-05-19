@@ -19,7 +19,7 @@ namespace HPWifiScan
                 return;
             }
 
-            if (args.Length > 2)
+            if (args.Length > 3)
             {
                 Console.WriteLine("Too many arguments!");
                 Help();
@@ -29,12 +29,19 @@ namespace HPWifiScan
             var ip = args[0];
             string fileName = "scan.jpg";
 
-            if (args.Length == 2)
+            if (args.Length > 1)
             {
                 fileName = args[1];
             }
 
-            DoScan(ip, 20, fileName);
+            var dpi = -1;
+
+            if (args.Length == 3)
+            {
+                dpi = Convert.ToInt32(args[2]);
+            }
+
+            DoScan(ip, 20, fileName, dpi);
         }
 
         public static void Help()
@@ -45,14 +52,17 @@ namespace HPWifiScan
             Console.WriteLine("");
             Console.WriteLine("Usage:");
             Console.WriteLine("");
-            Console.WriteLine("HPWifiScan.exe PrinterIP [filename]");
+            Console.WriteLine("HPWifiScan.exe PrinterIP [filename] [dpi]");
             Console.WriteLine("");
             Console.WriteLine("  default fileName is scan.jpg");
+            Console.WriteLine("  default DPI maximum supported by printer");
             Console.WriteLine("");
             Console.WriteLine("Examples:");
             Console.WriteLine("");
             Console.WriteLine("HPWifiScan.exe 10.0.0.14");
             Console.WriteLine("HPWifiScan.exe 10.0.0.14 MyScannedFile.jpg");
+            Console.WriteLine("HPWifiScan.exe 10.0.0.14 MyScannedFile-300DPI.jpg 300");
+            Console.WriteLine("HPWifiScan.exe 10.0.0.14 MyScannedFile-600DPI.jpg 600");
         }
 
         private static HttpWebResponse SendRequest(string url, string method, string postRequest = null)
@@ -104,7 +114,7 @@ namespace HPWifiScan
             return SendRequest(url, "POST", xml);
         }
 
-        public static void DoScan(string printerUrl, int timeoutSeconds = 20, string fileName = "scan.jpg")
+        public static void DoScan(string printerUrl, int timeoutSeconds = 20, string fileName = "scan.jpg", int dpi=-1)
         {
             try
             {
@@ -209,6 +219,12 @@ namespace HPWifiScan
 
                 var maxXScanRes = scanXResolutionslist[scanXResolutionslist.Count - 1];
                 var maxYScanRes = scanYResolutionslist[scanYResolutionslist.Count - 1];
+
+                if (dpi != -1)
+                {
+                    maxXScanRes = dpi.ToString();
+                    maxYScanRes = dpi.ToString();
+                }
 
                 var fileExt = Path.GetExtension(fileName).ToLower();
                 var documentFormatExt = fileExt == ".pdf" ? "application/pdf" : "image/jpeg";
