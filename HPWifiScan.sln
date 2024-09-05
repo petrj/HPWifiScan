@@ -17,4 +17,7 @@ Global
 		{07F7D140-667A-4C08-BDE2-5C8647A30E75}.Debug|x64.ActiveCfg = Debug|x64
 		{07F7D140-667A-4C08-BDE2-5C8647A30E75}.Debug|x64.Build.0 = Debug|x64
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		version = 0.4
+	EndGlobalSection
 EndGlobal

@@ -2,6 +2,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <StartAction>Project</StartAction>
-    <StartArguments>10.0.0.14 /temp/scan-600.jpg 600</StartArguments>
+    <StartArguments>10.0.0.14 /temp/scan-300.jpg 300</StartArguments>
   </PropertyGroup>
 </Project>
